@@ -1,0 +1,391 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: paper_mermaid
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/tongyi:0.0.18@ca40ec06ff35ca611fa5fdf99a15eeb007a9fe3bd725c9ff6d0436469ab0edc9
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1744963543115-c76452e2-404a-478d-b554-8d98f5deeb83-1744963665143-target
+      source: '1744963543115'
+      sourceHandle: c76452e2-404a-478d-b554-8d98f5deeb83
+      target: '1744963665143'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1744963543115-true-1744963717411-target
+      source: '1744963543115'
+      sourceHandle: 'true'
+      target: '1744963717411'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1744963717411-source-1744963820146-target
+      source: '1744963717411'
+      sourceHandle: source
+      target: '1744963820146'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1744963665143-source-1744963847539-target
+      source: '1744963665143'
+      sourceHandle: source
+      target: '1744963847539'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: document-extractor
+      id: 1744863124774-source-1744964558883-target
+      source: '1744863124774'
+      sourceHandle: source
+      target: '1744964558883'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: document-extractor
+        targetType: if-else
+      id: 1744964558883-source-1744963543115-target
+      source: '1744964558883'
+      sourceHandle: source
+      target: '1744963543115'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: paper_file
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: paper_file
+        - label: abstract_option
+          max_length: 48
+          options:
+          - 是
+          - 否
+          required: true
+          type: select
+          variable: abstract_option
+      height: 115
+      id: '1744863124774'
+      position:
+        x: -234.09056001116022
+        y: 410
+      positionAbsolute:
+        x: -234.09056001116022
+        y: 410
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 98539aa0-f53f-486e-a243-9c6a24085648
+            value: 是
+            varType: string
+            variable_selector:
+            - '1744863124774'
+            - abstract_option
+          id: 'true'
+          logical_operator: and
+        - case_id: c76452e2-404a-478d-b554-8d98f5deeb83
+          conditions:
+          - comparison_operator: is
+            id: d7bb6d8d-97f9-4a24-a420-fcbd1135aab5
+            value: 否
+            varType: string
+            variable_selector:
+            - '1744863124774'
+            - abstract_option
+          id: c76452e2-404a-478d-b554-8d98f5deeb83
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 173
+      id: '1744963543115'
+      position:
+        x: 384
+        y: 410
+      positionAbsolute:
+        x: 384
+        y: 410
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1744863124774'
+          - paper_file
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qwen-max-2025-01-25
+          provider: langgenius/tongyi/tongyi
+        prompt_template:
+        - id: 6bda2b7d-8a47-4b4d-9ad7-972b9ccce578
+          role: system
+          text: '<背景>
+
+            你是一个专门从科研文献中提取流程并将其转换为 Mermaid 流程图代码的 AI 助手
+
+
+            <任务>
+
+            科研文献内容来自用户上传的文件{{#1744964558883.text#}}，请仔细阅读，识别其中描述的主要分析步骤、实验流程或方法论，将这些步骤输出为
+            mermaid 代码并渲染出来。
+
+
+            请确保：
+
+            1. 代码块以 ''```mermaid'' 开始，以 ''```'' 结束。
+
+            2. 不要输出多余内容。'
+        - id: 164363b9-c9f8-476b-b2fa-d839e271abd9
+          role: user
+          text: ''
+        selected: false
+        title: 图
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1744963665143'
+      position:
+        x: 695.5568399993026
+        y: 508.9489399975587
+      positionAbsolute:
+        x: 695.5568399993026
+        y: 508.9489399975587
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1744863124774'
+          - paper_file
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qwen-max-2025-01-25
+          provider: langgenius/tongyi/tongyi
+        prompt_template:
+        - id: 0491d657-54cf-4ce2-a39f-d19a3d7e9eed
+          role: system
+          text: '你是一个专门从文本中提取流程并将其转换为 Mermaid 流程图代码的 AI 助手。
+
+
+            请仔细阅读用户提供的文本{{#1744964558883.text#}}，识别其中描述的主要分析步骤、实验流程或方法论。
+
+
+            然后，将这些步骤转化为 Mermaid 语法的 flowchart (TD 或 LR)，输出中文摘要、mermaid 代码。
+
+
+            请确保：
+
+            1. 代码块以 ''```mermaid'' 开始，以 ''```'' 结束。
+
+            2. 不要输出多余内容。
+
+            '
+        selected: false
+        title: 图+摘要
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1744963717411'
+      position:
+        x: 753.4629100050568
+        y: 142.97542996808895
+      positionAbsolute:
+        x: 753.4629100050568
+        y: 142.97542996808895
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1744963717411'
+          - text
+          variable: 图+摘要输出
+        selected: false
+        title: 结束
+        type: end
+      height: 89
+      id: '1744963820146'
+      position:
+        x: 1005
+        y: 152.50095996930958
+      positionAbsolute:
+        x: 1005
+        y: 152.50095996930958
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1744963665143'
+          - text
+          variable: 图
+        selected: false
+        title: 结束 3
+        type: end
+      height: 89
+      id: '1744963847539'
+      position:
+        x: 1005
+        y: 508.9489399975587
+      positionAbsolute:
+        x: 1005
+        y: 508.9489399975587
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_array_file: false
+        selected: false
+        title: 文档提取器
+        type: document-extractor
+        variable_selector:
+        - '1744863124774'
+        - paper_file
+      height: 91
+      id: '1744964558883'
+      position:
+        x: 95.61126998482916
+        y: 410
+      positionAbsolute:
+        x: 95.61126998482916
+        y: 410
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 268.7749326109912
+      y: 222.27980612582598
+      zoom: 0.6111136356601675
